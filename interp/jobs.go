@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // A job is a background shell running as a goroutine rather than a process,

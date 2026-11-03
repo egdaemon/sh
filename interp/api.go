@@ -40,8 +40,8 @@ import (
 	"sync"
 	"time"
 
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // A Runner interprets shell programs. It can be reused, but it is not safe for

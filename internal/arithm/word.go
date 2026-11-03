@@ -6,7 +6,7 @@
 // which cannot import syntax as the syntax tests import it.
 package arithm
 
-import "mvdan.cc/sh/v3/syntax"
+import "github.com/egdaemon/sh/v3/syntax"
 
 // Word rebuilds the word which an arithmetic expression was parsed from.
 // Bash expands an associative array subscript as a word, but an unquoted

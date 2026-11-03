@@ -19,9 +19,9 @@ import (
 
 	"golang.org/x/term"
 
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // TODO: given the categories below, perhaps this should be more like:

@@ -8,7 +8,7 @@
 // https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_13.
 //
 // For one-call matching and globbing with Bash semantics,
-// see [mvdan.cc/sh/v3/shell.Match] and [mvdan.cc/sh/v3/shell.Glob].
+// see [github.com/egdaemon/sh/v3/shell.Match] and [github.com/egdaemon/sh/v3/shell.Glob].
 package pattern
 
 import (

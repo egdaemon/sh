@@ -11,8 +11,8 @@ import (
 	"testing"
 	"testing/fstest"
 
+	"github.com/egdaemon/sh/v3/syntax"
 	"github.com/go-quicktest/qt"
-	"mvdan.cc/sh/v3/syntax"
 )
 
 func parseWord(t *testing.T, src string, opts ...syntax.ParserOption) *syntax.Word {

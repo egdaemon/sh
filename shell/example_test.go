@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"testing/fstest"
 
-	"mvdan.cc/sh/v3/shell"
+	"github.com/egdaemon/sh/v3/shell"
 )
 
 func ExampleExpand() {

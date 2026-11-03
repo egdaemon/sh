@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-quicktest/qt"
 
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 func TestSplitBracesDeep(t *testing.T) {
