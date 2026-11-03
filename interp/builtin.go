@@ -1078,6 +1078,11 @@ dispatch:
 			if r.callbackErr != "" {
 				r.outf("trap -- %q ERR\n", r.callbackErr)
 			}
+			for n, callback := range r.callbackSignals {
+				if callback != "" {
+					r.outf("trap -- %q SIG%s\n", callback, signalNames[n])
+				}
+			}
 		case 1:
 			// assume it's a signal, the default will be restored
 		default:
@@ -1096,7 +1101,16 @@ dispatch:
 			case "EXIT":
 				r.callbackExit = callback
 			default:
-				return failf(2, "trap: %s: invalid signal specification\n", arg)
+				// parseSignal accepts "0" for the kill builtin, which is EXIT here.
+				sig, ok := parseSignal(arg)
+				switch {
+				case !ok:
+					return failf(2, "trap: %s: invalid signal specification\n", arg)
+				case sig == 0:
+					r.callbackExit = callback
+				default:
+					r.callbackSignals[sig] = callback
+				}
 			}
 		}
 
