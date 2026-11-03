@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // Braces performs brace expansion on a word, given that it contains any

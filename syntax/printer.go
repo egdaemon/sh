@@ -12,7 +12,7 @@ import (
 	"text/tabwriter"
 	"unicode"
 
-	"mvdan.cc/sh/v3/fileutil"
+	"github.com/egdaemon/sh/v3/fileutil"
 )
 
 // TODO(v4): replace the functional options with an options struct.

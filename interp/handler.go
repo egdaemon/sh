@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // TODO(v4): pass [HandlerContext] to handlers as a parameter.

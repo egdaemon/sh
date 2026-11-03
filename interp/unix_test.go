@@ -18,9 +18,9 @@ import (
 	"time"
 
 	"github.com/creack/pty"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/interp"
 	"github.com/go-quicktest/qt"
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/interp"
 )
 
 func TestRunnerTerminalStdIO(t *testing.T) {

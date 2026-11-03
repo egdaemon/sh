@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/egdaemon/sh/v3/syntax"
 	"github.com/go-quicktest/qt"
-	"mvdan.cc/sh/v3/syntax"
 )
 
 func lit(s string) *syntax.Lit                { return &syntax.Lit{Value: s} }

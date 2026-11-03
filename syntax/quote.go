@@ -38,7 +38,7 @@ const (
 // A [*QuoteError] is returned when s cannot be quoted in lang,
 // such as null bytes in any variant, or non-printable characters in POSIX.
 //
-// To quote a list of arguments into a command line, see [mvdan.cc/sh/v3/shell.Join].
+// To quote a list of arguments into a command line, see [github.com/egdaemon/sh/v3/shell.Join].
 func Quote(s string, lang LangVariant) (string, error) {
 	if s == "" {
 		// Special case; an empty string must always be quoted,

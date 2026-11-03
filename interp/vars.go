@@ -16,10 +16,10 @@ import (
 	"strconv"
 	"strings"
 
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/internal/arithm"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/internal/arithm"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // overlayEnviron is our main implementation of [expand.WriteEnviron].

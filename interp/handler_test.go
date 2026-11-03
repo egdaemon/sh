@@ -23,9 +23,9 @@ import (
 	"testing/fstest"
 	"time"
 
+	"github.com/egdaemon/sh/v3/interp"
+	"github.com/egdaemon/sh/v3/syntax"
 	"github.com/go-quicktest/qt"
-	"mvdan.cc/sh/v3/interp"
-	"mvdan.cc/sh/v3/syntax"
 )
 
 func blocklistOneExec(name string) func(interp.ExecHandlerFunc) interp.ExecHandlerFunc {

@@ -7,6 +7,6 @@
 // [NewParser] builds a syntax tree from source, [NewPrinter] formats it back
 // into source and is the engine behind shfmt, and [Walk] and [Preorder]
 // traverse it. [Simplify] removes redundant syntax, [Quote] quotes arbitrary
-// strings as shell words, and [mvdan.cc/sh/v3/syntax/typedjson] encodes trees
+// strings as shell words, and [github.com/egdaemon/sh/v3/syntax/typedjson] encodes trees
 // as JSON.
 package syntax

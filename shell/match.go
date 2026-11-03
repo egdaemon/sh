@@ -4,8 +4,8 @@
 package shell
 
 import (
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/pattern"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/pattern"
 )
 
 // Match reports whether name matches the shell pattern, following the rules of

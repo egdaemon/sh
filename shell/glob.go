@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"mvdan.cc/sh/v3/expand"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/expand"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // Glob returns the names of all files in fsys matching the shell pattern,

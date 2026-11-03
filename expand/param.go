@@ -13,10 +13,10 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/internal/arithm"
-	"mvdan.cc/sh/v3/pattern"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/internal/arithm"
+	"github.com/egdaemon/sh/v3/pattern"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 func nodeLit(node syntax.Node) string {

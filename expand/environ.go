@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"mvdan.cc/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/internal"
 )
 
 // Environ is the base interface for a shell's environment, allowing it to fetch

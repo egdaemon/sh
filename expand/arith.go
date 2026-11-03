@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"mvdan.cc/sh/v3/internal"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/internal"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 // TODO(v4): the arithmetic APIs should return int64, which is what Bash uses
