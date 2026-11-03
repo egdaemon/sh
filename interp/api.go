@@ -265,8 +265,9 @@ type Runner struct {
 	keptFiles []*stmtHold
 
 	// Fake signal callbacks
-	callbackErr  string
-	callbackExit string
+	callbackErr     string
+	callbackExit    string
+	callbackSignals [len(signalNames)]string
 }
 
 // exitStatus holds the state of the shell after running one command.
@@ -1282,6 +1283,10 @@ func IsExitStatus(err error) (status uint8, ok bool) {
 // Calling Run on an entire [*File] implies an exit, meaning that an exit trap may
 // run.
 //
+// Cancelling ctx stands in for a signal: the trap for the signal the kill builtin
+// cancelled with, or for TERM otherwise, runs before the exit trap. Both run
+// without the cancellation, so a trap which never finishes blocks Run.
+//
 // Run does not wait for background shells or process substitutions, which may
 // keep running after it returns, writing output and holding the files they
 // inherited open; see [Runner.WaitBackground].
@@ -1309,6 +1314,14 @@ func (r *Runner) Run(ctx context.Context, node syntax.Node) error {
 	}
 	// A bare Command bypasses stmt, which normally updates lastExit.
 	r.lastExit = r.exit
+	if ctx.Err() != nil {
+		sig := uint8(15)
+		if s, ok := context.Cause(ctx).(killSignal); ok {
+			sig = uint8(s)
+		}
+		ctx = context.WithoutCancel(ctx)
+		r.trapCallback(ctx, r.callbackSignals[sig], "SIG"+signalNames[sig])
+	}
 	// Running an entire file implies an exit; a statement or command
 	// only exits the shell via the exit builtin, errexit, and so on.
 	if _, ok := node.(*syntax.File); ok || r.exit.exiting {

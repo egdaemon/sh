@@ -3627,6 +3627,11 @@ done <<< 2`,
 	{"trap 'false; echo next $?' EXIT; true", "next 1\n"},
 	{"trap 'echo err $?' ERR; trap 'echo exit $?' EXIT; false; true", "err 1\nexit 0\n"},
 	{"false; trap 'echo exit $?' EXIT; true", "exit 0\n"},
+	// Signal traps only run when a signal arrives, see TestRunnerContextTraps.
+	{"trap 'echo term' TERM; echo ok", "ok\n"},
+	{"trap 'echo sig' SIGINT 1 hup; trap - INT HUP 1; echo ok", "ok\n"},
+	{"trap 'echo at_exit' 0; true", "at_exit\n"},
+	{"trap 'foobar' SIGUNKNOWN", "trap: SIGUNKNOWN: invalid signal specification\nexit status 2 #JUSTERR"},
 
 	// eval
 	{"eval", ""},
@@ -6729,6 +6734,68 @@ func TestRunnerContext(t *testing.T) {
 			case <-time.After(timeout):
 				t.Fatalf("program was not killed in %s", timeout)
 			}
+		})
+	}
+}
+
+func TestRunnerContextTraps(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name string
+		in   string
+		want string
+		err  string
+	}{
+		{"term trap then exit trap", "trap 'echo term' TERM; trap 'echo exit' EXIT; interp_cancel; echo never", "term\nexit\n", "context canceled"},
+		{"exit trap alone", "trap 'echo exit' EXIT; interp_cancel; echo never", "exit\n", "context canceled"},
+		{"other signal traps do not run", "trap 'echo int' INT; interp_cancel; echo never", "", "context canceled"},
+		{"trap runs commands after cancellation", "trap 'interp_echo cleanup' TERM; interp_cancel; echo never", "cleanup\n", "context canceled"},
+		{"cleared trap does not run", "trap 'echo term' TERM; trap - TERM; interp_cancel; echo never", "", "context canceled"},
+		{"kill runs the job's trap for its signal", "{ trap 'echo int' INT; trap 'echo term' TERM; interp_ready; interp_block; } & interp_wait; kill -INT %1; wait %1", "int\n", "exit status 130"},
+		{"trap lists signal traps", "trap 'echo t' TERM 1; trap", "trap -- \"echo t\" SIGHUP\ntrap -- \"echo t\" SIGTERM\n", ""},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			ctx, cancel := context.WithCancel(t.Context())
+			defer cancel()
+			ready := make(chan struct{})
+			var stdout bytes.Buffer
+			r, err := interp.New(
+				interp.StdIO(nil, &stdout, &stdout),
+				interp.ExecHandlers(func(next interp.ExecHandlerFunc) interp.ExecHandlerFunc {
+					return func(ctx context.Context, args []string) error {
+						switch args[0] {
+						case "interp_cancel":
+							cancel()
+						case "interp_ready":
+							close(ready)
+						case "interp_wait":
+							<-ready
+						case "interp_block":
+							<-ctx.Done()
+							return ctx.Err()
+						case "interp_echo":
+							if err := ctx.Err(); err != nil {
+								return err
+							}
+							fmt.Fprintln(interp.HandlerCtx(ctx).Stdout, strings.Join(args[1:], " "))
+						default:
+							return next(ctx, args)
+						}
+						return nil
+					}
+				}),
+			)
+			qt.Assert(t, qt.IsNil(err))
+			err = r.Run(ctx, parse(t, nil, test.in))
+			if test.err == "" {
+				qt.Assert(t, qt.IsNil(err))
+			} else {
+				qt.Assert(t, qt.ErrorMatches(err, test.err))
+			}
+			qt.Assert(t, qt.Equals(stdout.String(), test.want))
 		})
 	}
 }
