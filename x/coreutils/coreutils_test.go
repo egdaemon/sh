@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"mvdan.cc/sh/v3/interp"
-	"mvdan.cc/sh/v3/syntax"
+	"github.com/egdaemon/sh/v3/interp"
+	"github.com/egdaemon/sh/v3/syntax"
 )
 
 func TestExecHandler(t *testing.T) {
